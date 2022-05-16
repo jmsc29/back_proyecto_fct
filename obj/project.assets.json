@@ -7880,11 +7880,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\saezc\\OneDrive\\Escritorio\\proyecto\\control_de_accesos_back\\control_de_accesos_back\\control_de_accesos_back.csproj",
+      "projectUniqueName": "C:\\Users\\saezc\\OneDrive\\Escritorio\\Mi_escritorio\\proyecto\\control_de_accesos_back\\control_de_accesos_back\\control_de_accesos_back.csproj",
       "projectName": "control_de_accesos_back",
-      "projectPath": "C:\\Users\\saezc\\OneDrive\\Escritorio\\proyecto\\control_de_accesos_back\\control_de_accesos_back\\control_de_accesos_back.csproj",
+      "projectPath": "C:\\Users\\saezc\\OneDrive\\Escritorio\\Mi_escritorio\\proyecto\\control_de_accesos_back\\control_de_accesos_back\\control_de_accesos_back.csproj",
       "packagesPath": "C:\\Users\\saezc\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\saezc\\OneDrive\\Escritorio\\proyecto\\control_de_accesos_back\\control_de_accesos_back\\obj\\",
+      "outputPath": "C:\\Users\\saezc\\OneDrive\\Escritorio\\Mi_escritorio\\proyecto\\control_de_accesos_back\\control_de_accesos_back\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\saezc\\AppData\\Roaming\\NuGet\\NuGet.Config",

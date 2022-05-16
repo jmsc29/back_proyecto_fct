@@ -26,17 +26,31 @@ namespace control_de_accesos_back.Data
             return usuario;
         }
 
-        public Usuario GetByEmail(string email)
+        public Usuario GetByNombreUsuario(string nombre_usuario)
         {
             
             try
             {
-                var ret = _context.Usuario.FirstOrDefault(a => a.Email == email);
+                var ret = _context.Usuario.FirstOrDefault(a => a.Nombre_usuario == nombre_usuario);
                 return ret;
             }
             catch(System.AggregateException)
             {
                 return null;
+            }
+        }
+
+        public int GetAllByNombreUsuario(string nombre_usuario)
+        {
+
+            try
+            {
+                var ret = _context.Usuario.Count(a => a.Nombre_usuario.Contains(nombre_usuario));
+                return ret;
+            }
+            catch (System.AggregateException)
+            {
+                return 0;
             }
         }
 

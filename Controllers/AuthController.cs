@@ -8,6 +8,7 @@ using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace control_de_accesos_back.Controllers
@@ -25,32 +26,17 @@ namespace control_de_accesos_back.Controllers
             _jwtService = jwtService;
         }
 
-        [HttpPost("registro")]
-        public IActionResult Register(RegisterDto dto)
-        {
-            var usuario = new Usuario
-            {
-                Nombre = dto.Nombre,
-                Apellidos = dto.Apellidos,
-                Email = dto.Email,
-                Telefono = dto.Telefono,
-                Departamento = dto.Departamento,
-                Password = BCrypt.Net.BCrypt.HashPassword(dto.Password)
-            };
-
-
-            return Created("success", _repositorio.Create(usuario));
-        }
 
         [HttpPost("login")]
         public IActionResult Login(LoginDto dto)
         {
 
-            var usuario = _repositorio.GetByEmail(dto.Email);
+            var usuario = _repositorio.GetByNombreUsuario(dto.Nombre_usuario);
 
-            if (usuario == null) return BadRequest(new { message = "Credenciales inválidas" });
 
-            if(!BCrypt.Net.BCrypt.Verify(dto.Password, usuario.Password)) return BadRequest(new { message = "Contraseña incorrecta" });
+            if (usuario == null) return  BadRequest(new { message = "Credenciales inválidas" });
+
+            if(!BCrypt.Net.BCrypt.Verify(dto.Password, usuario.Password)) return  BadRequest(new { message = "Contraseña incorrecta" });
 
             var jwt = _jwtService.Generate(usuario.Id_usuario);
 
@@ -63,7 +49,13 @@ namespace control_de_accesos_back.Controllers
 
             return Ok(new
             {
-                message = "success"
+                Nombre = usuario.Nombre,
+                Apellidos = usuario.Apellidos,
+                Nombre_usuario = usuario.Nombre_usuario,
+                Telefono = usuario.Telefono,
+                Departamento = usuario.Departamento,
+                Tipo_usuario = usuario.Tipo_usuario
+                //Password = BCrypt.Net.BCrypt.HashPassword(usuario.Password)
             }
             );
 
@@ -86,6 +78,23 @@ namespace control_de_accesos_back.Controllers
                 return Unauthorized();
             }
             
+        }
+
+        [HttpGet("user/{id}")]
+        public IActionResult UsuarioEditar(int id)
+        {
+            try
+            {
+                var usuario = _repositorio.GetById(id);
+
+                return Ok(usuario);
+
+            }
+            catch (Exception)
+            {
+                return Unauthorized();
+            }
+
         }
 
         [HttpPost("logout")]

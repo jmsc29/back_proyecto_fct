@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "YUM+9rjYLPZBQzwk2fQcSHb4U2Xk9ZQGhYKS/YSNhp0M0ticyGPprtnLqAoU+l0NfKtlcXWPmPYAnuw6mZdaMQ==",
+  "dgSpecHash": "yl1dqhtmjK0HTA9oVKfUMBCVoDSP0VHfNRcspjBHHzjkbz1BguD9OAIW0p/rKj8k47dJ3xKo8yvrE8VaDyLu+g==",
   "success": true,
-  "projectFilePath": "C:\\Users\\saezc\\OneDrive\\Escritorio\\proyecto\\control_de_accesos_back\\control_de_accesos_back\\control_de_accesos_back.csproj",
+  "projectFilePath": "C:\\Users\\saezc\\OneDrive\\Escritorio\\Mi_escritorio\\proyecto\\control_de_accesos_back\\control_de_accesos_back\\control_de_accesos_back.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\saezc\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
     "C:\\Users\\saezc\\.nuget\\packages\\bouncycastle.netcore\\1.8.5\\bouncycastle.netcore.1.8.5.nupkg.sha512",

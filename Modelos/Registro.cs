@@ -9,7 +9,7 @@ namespace control_de_accesos_back.Modelos
     {
         public int Id_registro { get; set; } //Clave primaria de registro
         public DateTime Fecha { get; set; }
-        public DateTime Hora { get; set; }
+        public TimeSpan Hora { get; set; }
         public bool Tipo { get; set; }
         public int Id_usuario { get; set; } //Clave foránea de Usuario
         //Registro:Usuario => N:1

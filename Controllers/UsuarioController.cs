@@ -7,18 +7,23 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using control_de_accesos_back;
 using control_de_accesos_back.Modelos;
+using control_de_accesos_back.Data;
+using control_de_accesos_back.Dtos;
+using System.Text.RegularExpressions;
 
 namespace control_de_accesos_back.Controllers
 {
-    [Route("api/usuario")]
+    [Route("api/usuarios")]
     [ApiController]
     public class UsuarioController : ControllerBase
     {
         private readonly MyContext _context;
+        private readonly IUsuarioRepositorio _repositorio;
 
-        public UsuarioController(MyContext context)
+        public UsuarioController(MyContext context, IUsuarioRepositorio repositorio)
         {
             _context = context;
+            _repositorio = repositorio;
         }
 
         // GET: api/Usuario
@@ -43,10 +48,10 @@ namespace control_de_accesos_back.Controllers
         }
 
         // GET: api/Usuario/5
-        [HttpGet("{email}/{password}")]
-        public ActionResult<Usuario> GetUsuarioLogin(string email, string password)
+        [HttpGet("{nombre_usuario}/{password}")]
+        public ActionResult<Usuario> GetUsuarioLogin(string nombre_usuario, string password)
         {
-            var usuario = _context.Usuario.Where(usuario => usuario.Email.Equals(email) && usuario.Password.Equals(password)).ToList().FirstOrDefault();
+            var usuario = _context.Usuario.Where(usuario => usuario.Nombre_usuario.Equals(nombre_usuario) && usuario.Password.Equals(password)).ToList().FirstOrDefault();
 
             if (usuario == null)
             {
@@ -84,7 +89,62 @@ namespace control_de_accesos_back.Controllers
                 }
             }
 
-            return NoContent();
+            return Ok(new
+            {
+                message = "success"
+            });
+        }
+
+        [HttpPost("registro")]
+        public IActionResult Register(UsuarioDto dto)
+        {
+            var usuario = new Usuario();
+
+            var compUsuario = _repositorio.GetAllByNombreUsuario(Utils.GenerarNombreUsuario(dto.Nombre, dto.Apellidos));
+
+            if (compUsuario > 0)
+            {
+                string nombre_usuario_actualizado = Utils.GenerarNombreUsuario(dto.Nombre, dto.Apellidos) + (compUsuario);
+                usuario = new Usuario
+                {
+                    Nombre = dto.Nombre,
+                    Apellidos = dto.Apellidos,
+                    Nombre_usuario = Regex.Replace(nombre_usuario_actualizado, @"[^0-9A-Za-z]", "", RegexOptions.None),
+                    Telefono = dto.Telefono,
+                    Departamento = dto.Departamento,
+                    Tipo_usuario = dto.Tipo_usuario,
+                    Password = BCrypt.Net.BCrypt.HashPassword(nombre_usuario_actualizado)
+                };
+            }
+            else
+            {
+                usuario = new Usuario
+                {
+                    Nombre = dto.Nombre,
+                    Apellidos = dto.Apellidos,
+                    Nombre_usuario = Utils.GenerarNombreUsuario(dto.Nombre, dto.Apellidos),
+                    Telefono = dto.Telefono,
+                    Departamento = dto.Departamento,
+                    Tipo_usuario = dto.Tipo_usuario,
+                    Password = BCrypt.Net.BCrypt.HashPassword(Utils.GenerarNombreUsuario(dto.Nombre, dto.Apellidos))
+                };
+
+            }
+
+            _repositorio.Create(usuario);
+
+            return Ok(new
+            {
+                Nombre = usuario.Nombre,
+                Apellidos = usuario.Apellidos,
+                Nombre_usuario = usuario.Nombre_usuario,
+                Telefono = usuario.Telefono,
+                Departamento = usuario.Departamento,
+                Tipo_usuario = usuario.Tipo_usuario
+                //Password = BCrypt.Net.BCrypt.HashPassword(usuario.Password)
+            }
+            );
+
         }
 
         // POST: api/Usuario
@@ -100,10 +160,10 @@ namespace control_de_accesos_back.Controllers
 
         // POST: api/Usuario
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost("{email}/{password}")]
-        public ActionResult<Usuario> PostMiUsuario(string email, string password)
+        [HttpPost("{nombre_usuario}/{password}")]
+        public ActionResult<Usuario> PostMiUsuario(string nombre_usuario, string password)
         {
-            var usuario = _context.Usuario.Where(usuario => usuario.Email.Equals(email) && usuario.Password.Equals(password)).ToList().FirstOrDefault();
+            var usuario = _context.Usuario.Where(usuario => usuario.Nombre_usuario.Equals(nombre_usuario) && usuario.Password.Equals(password)).ToList().FirstOrDefault();
 
             if (usuario == null)
             {
