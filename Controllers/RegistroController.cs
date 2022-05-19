@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using control_de_accesos_back;
 using control_de_accesos_back.Modelos;
+using control_de_accesos_back.Data;
+using control_de_accesos_back.Dtos;
 
 namespace control_de_accesos_back.Controllers
 {
@@ -15,17 +17,35 @@ namespace control_de_accesos_back.Controllers
     public class RegistroController : ControllerBase
     {
         private readonly MyContext _context;
+        private readonly IRegistroRepositorio _repositorio;
 
-        public RegistroController(MyContext context)
+        public RegistroController(MyContext context, IRegistroRepositorio repositorio)
         {
             _context = context;
+            _repositorio = repositorio;
         }
 
         // GET: api/Registroes
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Registro>>> GetRegistro()
+        public List<Registro> GetRegistro()
         {
-            return await _context.Registro.ToListAsync();
+            DateTime thisDay = DateTime.Today;
+            var fechaHoy = thisDay.Date.ToString().Split(" ")[0].Split("/");
+            var fechaOrdenada = fechaHoy[2] + "-" + fechaHoy[1] + "-" + fechaHoy[0];
+            var registros = _context.Registro.ToList();
+            var registrosHoy = new List<Registro>();
+
+            foreach (Registro registro in registros)
+            {
+                var usuario = _context.Usuario.ToList().Find(a => a.Id_usuario == registro.Id_usuario);
+                registro.Nombre = usuario.Nombre + " " + usuario.Apellidos;
+                if (registro.Fecha == fechaOrdenada)
+                {
+                    registrosHoy.Add(registro);
+                }
+            }
+
+            return registrosHoy.OrderByDescending(b => b.Hora).ToList();
         }
 
         // GET: api/Registroes/5
@@ -76,12 +96,32 @@ namespace control_de_accesos_back.Controllers
         // POST: api/Registroes
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Registro>> PostRegistro(Registro registro)
+        public IActionResult MarcarRegistro(RegistroDto dto)
         {
-            _context.Registro.Add(registro);
-            await _context.SaveChangesAsync();
+            var registro = new Registro();
+            var hola = 0;
 
-            return CreatedAtAction("GetRegistro", new { id = registro.Id_registro }, registro);
+
+            registro = new Registro
+            {
+                Fecha = dto.Fecha,
+                Hora = dto.Hora,
+                Tipo = dto.Tipo,
+                Id_usuario = dto.Id_usuario,
+                Nombre = dto.Nombre
+            };
+
+            _repositorio.Create(registro);
+
+            return Ok(new
+            {
+                Fecha = registro.Fecha,
+                Hora = registro.Hora,
+                Tipo = registro.Tipo,
+                Id_usuario = registro.Id_usuario,
+                Nombre = dto.Nombre
+            }
+            );
         }
 
         // DELETE: api/Registroes/5

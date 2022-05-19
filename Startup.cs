@@ -14,6 +14,7 @@ using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace control_de_accesos_back
@@ -40,7 +41,9 @@ namespace control_de_accesos_back
             //using (MySqlConnection con = new MySqlConnection(Configuration.GetConnectionString("defaultConnection")));
 
             services.AddControllers();
+            //services.AddControllers().AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
             services.AddScoped<IUsuarioRepositorio, UsuarioRepositorio>();
+            services.AddScoped<IRegistroRepositorio, RegistroRepositorio>();
             services.AddScoped<JwtService>();
 
             //Añado los Cors

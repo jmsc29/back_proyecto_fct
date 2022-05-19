@@ -16,14 +16,18 @@ namespace control_de_accesos_back.Data
             _context = context;
         }
 
-        public Usuario Create(Registro registro)
+        public Registro Create(Registro registro)
+        {
+            _context.Registro.Add(registro);
+            _context.SaveChanges();
+
+            return registro;
+        }
+
+        public List<Registro> GetAllRegistros()
         {
             throw new NotImplementedException();
         }
 
-        public Usuario GetAllRegistros(string nombre_usuario)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
