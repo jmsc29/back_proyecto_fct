@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\saezc\\OneDrive\\Escritorio\\Mi_escritorio\\proyecto\\control_de_accesos_back\\control_de_accesos_back\\control_de_accesos_back.csproj": {}
+    "C:\\Users\\jmsaez\\miProyecto\\back_proyecto_fct\\control_de_accesos_back.csproj": {}
   },
   "projects": {
-    "C:\\Users\\saezc\\OneDrive\\Escritorio\\Mi_escritorio\\proyecto\\control_de_accesos_back\\control_de_accesos_back\\control_de_accesos_back.csproj": {
+    "C:\\Users\\jmsaez\\miProyecto\\back_proyecto_fct\\control_de_accesos_back.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\saezc\\OneDrive\\Escritorio\\Mi_escritorio\\proyecto\\control_de_accesos_back\\control_de_accesos_back\\control_de_accesos_back.csproj",
+        "projectUniqueName": "C:\\Users\\jmsaez\\miProyecto\\back_proyecto_fct\\control_de_accesos_back.csproj",
         "projectName": "control_de_accesos_back",
-        "projectPath": "C:\\Users\\saezc\\OneDrive\\Escritorio\\Mi_escritorio\\proyecto\\control_de_accesos_back\\control_de_accesos_back\\control_de_accesos_back.csproj",
-        "packagesPath": "C:\\Users\\saezc\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\saezc\\OneDrive\\Escritorio\\Mi_escritorio\\proyecto\\control_de_accesos_back\\control_de_accesos_back\\obj\\",
+        "projectPath": "C:\\Users\\jmsaez\\miProyecto\\back_proyecto_fct\\control_de_accesos_back.csproj",
+        "packagesPath": "C:\\Users\\jmsaez\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\jmsaez\\miProyecto\\back_proyecto_fct\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\saezc\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\jmsaez\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -50,13 +54,13 @@
             },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
-              "version": "[5.0.16, )"
+              "version": "[5.0.17, )"
             },
             "Microsoft.EntityFrameworkCore.Tools": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[5.0.16, )"
+              "version": "[5.0.17, )"
             },
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",

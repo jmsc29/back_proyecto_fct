@@ -13,27 +13,48 @@ using System.Text.RegularExpressions;
 
 namespace control_de_accesos_back.Controllers
 {
+    /// <summary>Clase UsuarioController - para gestionar la gestión de usuarios.
+    /// </summary>
     [Route("api/usuarios")]
     [ApiController]
     public class UsuarioController : ControllerBase
     {
+        /// <summary>Instance variable <c>_context</c>Representa el contexto de la BBDD para poder acceder a ella.</summary>
         private readonly MyContext _context;
+        /// <summary>Instance variable <c>_repositorio</c>Representa el repositorio de métodos de los usuarios.</summary>
         private readonly IUsuarioRepositorio _repositorio;
 
+        /// <summary>
+        /// Constructor de la clase UsuarioController.
+        /// </summary>
         public UsuarioController(MyContext context, IUsuarioRepositorio repositorio)
         {
             _context = context;
             _repositorio = repositorio;
         }
 
-        // GET: api/Usuario
+        /// <summary>
+        /// Obtiene una lista con todos los usuarios
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Usuario>>> GetUsuario()
+        public List<Usuario> GetUsuario()
         {
-            return await _context.Usuario.ToListAsync();
+
+            var usuarios = _context.Usuario.ToList();
+
+            foreach (Usuario u in usuarios){
+                u.Departamento = _context.Departamento.ToList().Find(a => a.Id_departamento == u.Id_departamento);
+            }
+
+            return usuarios;
         }
 
-        // GET: api/Usuario/5
+        /// <summary>
+        /// Obtiene el usuario que coincide con el id recibido.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<Usuario>> GetUsuario(int id)
         {
@@ -47,22 +68,12 @@ namespace control_de_accesos_back.Controllers
             return usuario;
         }
 
-        // GET: api/Usuario/5
-        [HttpGet("{nombre_usuario}/{password}")]
-        public ActionResult<Usuario> GetUsuarioLogin(string nombre_usuario, string password)
-        {
-            var usuario = _context.Usuario.Where(usuario => usuario.Nombre_usuario.Equals(nombre_usuario) && usuario.Password.Equals(password)).ToList().FirstOrDefault();
-
-            if (usuario == null)
-            {
-                return NotFound();
-            }
-
-            return usuario;
-        }
-
-        // PUT: api/Usuario/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// Edita el usuario que coincide con el id recibido.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="usuario"></param>
+        /// <returns></returns>
         [HttpPut("{id}")]
         public async Task<IActionResult> PutUsuario(int id, Usuario usuario)
         {
@@ -95,6 +106,101 @@ namespace control_de_accesos_back.Controllers
             });
         }
 
+        /// <summary>
+        /// Modifica la contraseña del usuario con el id recibido poniéndole la nueva contraseña recibida en el parámetro 'newPassword'
+        /// siempre que coincida la contraseña inicial con la recibida en el parámetro 'password'.
+        /// </summary>
+        /// <param name="id_usuario"></param>
+        /// <param name="password"></param>
+        /// <param name="newPassword"></param>
+        /// <param name="usuario"></param>
+        /// <returns></returns>
+        [HttpPut("changePassword/{id_usuario}/{password}/{newPassword}")]
+        public async Task<IActionResult> PutUsuarioNewPassword(int id_usuario, string password, string newPassword, Usuario usuario)
+        {
+            //Se comprueba que el id del usuario es correcto
+            if (id_usuario != usuario.Id_usuario)
+            {
+                return BadRequest();
+            }
+
+            //Si la contraseña inicial recibida es incorrecta se envía un mensaje de error para avisar y no se realiza la modificación de la contraseña.
+            if (!BCrypt.Net.BCrypt.Verify(password, usuario.Password))
+            {
+                return BadRequest(new { message = "Contraseña actual incorrecta" });
+            }
+
+            usuario.Password = BCrypt.Net.BCrypt.HashPassword(newPassword);
+
+            _context.Entry(usuario).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!UsuarioExists(id_usuario))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return Ok(new
+            {
+                message = "success"
+            });
+        }
+
+        /// <summary>
+        /// Resetea la contraseña del usuario que tenga como id el recibido por parámetro.
+        /// </summary>
+        /// <param name="id_usuario"></param>
+        /// /// <param name="usuario"></param>
+        /// <returns></returns>
+        [HttpPut("resetPassword/{id_usuario}")]
+        public async Task<IActionResult> PutUsuarioResetPassword(int id_usuario, Usuario usuario)
+        {
+            if (id_usuario != usuario.Id_usuario)
+            {
+                return BadRequest();
+            }
+
+            usuario.Password = BCrypt.Net.BCrypt.HashPassword(usuario.Nombre_usuario);
+
+            _context.Entry(usuario).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!UsuarioExists(id_usuario))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return Ok(new
+            {
+                message = "success"
+            });
+        }
+
+        /// <summary>
+        /// Inserta un nuevo empleado.
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns></returns>
         [HttpPost("registro")]
         public IActionResult Register(UsuarioDto dto)
         {
@@ -111,8 +217,10 @@ namespace control_de_accesos_back.Controllers
                     Apellidos = dto.Apellidos,
                     Nombre_usuario = Regex.Replace(nombre_usuario_actualizado, @"[^0-9A-Za-z]", "", RegexOptions.None),
                     Telefono = dto.Telefono,
-                    Departamento = dto.Departamento,
+                    Id_departamento = dto.Id_departamento,
+                    Departamento = _context.Departamento.ToList().Find(a => a.Id_departamento == dto.Id_departamento),
                     Tipo_usuario = dto.Tipo_usuario,
+                    Activo = dto.Activo,
                     Password = BCrypt.Net.BCrypt.HashPassword(nombre_usuario_actualizado)
                 };
             }
@@ -124,8 +232,10 @@ namespace control_de_accesos_back.Controllers
                     Apellidos = dto.Apellidos,
                     Nombre_usuario = Utils.GenerarNombreUsuario(dto.Nombre, dto.Apellidos),
                     Telefono = dto.Telefono,
-                    Departamento = dto.Departamento,
+                    Id_departamento = dto.Id_departamento,
+                    Departamento = _context.Departamento.ToList().Find(a => a.Id_departamento == dto.Id_departamento),
                     Tipo_usuario = dto.Tipo_usuario,
+                    Activo = dto.Activo,
                     Password = BCrypt.Net.BCrypt.HashPassword(Utils.GenerarNombreUsuario(dto.Nombre, dto.Apellidos))
                 };
 
@@ -139,41 +249,21 @@ namespace control_de_accesos_back.Controllers
                 Apellidos = usuario.Apellidos,
                 Nombre_usuario = usuario.Nombre_usuario,
                 Telefono = usuario.Telefono,
+                Id_departamento = usuario.Id_departamento,
                 Departamento = usuario.Departamento,
-                Tipo_usuario = usuario.Tipo_usuario
+                Tipo_usuario = usuario.Tipo_usuario,
+                Activo = usuario.Activo
                 //Password = BCrypt.Net.BCrypt.HashPassword(usuario.Password)
             }
             );
 
         }
 
-        // POST: api/Usuario
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<Usuario>> PostUsuario(Usuario usuario)
-        {
-            _context.Usuario.Add(usuario);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetUsuario", new { id = usuario.Id_usuario }, usuario);
-        }
-
-        // POST: api/Usuario
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost("{nombre_usuario}/{password}")]
-        public ActionResult<Usuario> PostMiUsuario(string nombre_usuario, string password)
-        {
-            var usuario = _context.Usuario.Where(usuario => usuario.Nombre_usuario.Equals(nombre_usuario) && usuario.Password.Equals(password)).ToList().FirstOrDefault();
-
-            if (usuario == null)
-            {
-                return NotFound();
-            }
-
-            return usuario;
-        }
-
-        // DELETE: api/Usuario/5
+        /// <summary>
+        /// Elimina el empleado cuyo id coincide con el id recibido por parámetro.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUsuario(int id)
         {
@@ -189,6 +279,11 @@ namespace control_de_accesos_back.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Comprueba que el id recibido por parámetro coincide con el de un usuario para saber si existe.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         private bool UsuarioExists(int id)
         {
             return _context.Usuario.Any(e => e.Id_usuario == id);

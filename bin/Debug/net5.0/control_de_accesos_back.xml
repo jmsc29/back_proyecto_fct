@@ -1,0 +1,575 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>control_de_accesos_back</name>
+    </assembly>
+    <members>
+        <member name="T:control_de_accesos_back.Controllers.AuthController">
+            <summary>Clase AuthController - para gestionar la autenticación de usuarios en el login y logout.
+            </summary>
+        </member>
+        <member name="F:control_de_accesos_back.Controllers.AuthController._repositorio">
+            <summary>Instance variable <c>_repositorio</c>Representa el repositorio de métodos de los usuarios.</summary>
+        </member>
+        <member name="F:control_de_accesos_back.Controllers.AuthController._jwtService">
+            <summary>Instance variable <c>_jwtService</c>Representa la herramienta para trabajar con cookies en el navegador.</summary>
+        </member>
+        <member name="M:control_de_accesos_back.Controllers.AuthController.#ctor(control_de_accesos_back.Data.IUsuarioRepositorio,control_de_accesos_back.Helpers.JwtService)">
+            <summary>
+            Constructor de la clase AuthController.
+            </summary>
+        </member>
+        <member name="M:control_de_accesos_back.Controllers.AuthController.Login(control_de_accesos_back.Dtos.LoginDto)">
+            <summary>
+            Se encarga de revisar el proceso de login y en el caso de que todo esté correcto crea la cookie de login y se envía junto al usuario.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:control_de_accesos_back.Controllers.AuthController.Usuario">
+            <summary>
+            Obtiene el usuario que ha iniciado sesión basándonos en las cookies del navegador.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:control_de_accesos_back.Controllers.AuthController.UsuarioEditar(System.Int32)">
+            <summary>
+            Obtiene el usuario que coincide con el id recibido.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:control_de_accesos_back.Controllers.AuthController.Logout">
+            <summary>
+            Se encarga de cerrar sesión del usuario que previamente inició sesión eliminando las cookies del navegador.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:control_de_accesos_back.Controllers.DepartamentoController">
+            <summary>Clase DepartamentoController - para gestionar la gestión de departamentos.
+            </summary>
+        </member>
+        <member name="F:control_de_accesos_back.Controllers.DepartamentoController._context">
+            <summary>Instance variable <c>_context</c>Representa el contexto de la BBDD para poder acceder a ella.</summary>
+        </member>
+        <member name="M:control_de_accesos_back.Controllers.DepartamentoController.#ctor(control_de_accesos_back.MyContext)">
+            <summary>
+            Constructor de la clase DepartamentoController.
+            </summary>
+        </member>
+        <member name="M:control_de_accesos_back.Controllers.DepartamentoController.GetDepartamento">
+            <summary>
+            Se encarga de Obtener una lista con todos los departamentos.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:control_de_accesos_back.Controllers.DepartamentoController.GetDepartamento(System.Int32)">
+            <summary>
+            Obtiene el departamento que coincide con el id recibido.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:control_de_accesos_back.Controllers.DepartamentoController.PutDepartamento(System.Int32,control_de_accesos_back.Modelos.Departamento)">
+            <summary>
+            Modifica el departamento que coincide con el id recibido.
+            </summary>
+            <param name="id"></param>
+            <param name="departamento"></param>
+            <returns></returns>
+        </member>
+        <member name="M:control_de_accesos_back.Controllers.DepartamentoController.PostDepartamento(control_de_accesos_back.Modelos.Departamento)">
+            <summary>
+            Inserta el departamento recibido.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:control_de_accesos_back.Controllers.DepartamentoController.DeleteDepartamento(System.Int32)">
+            <summary>
+            Elimina el departamento que coincide con el id recibido.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:control_de_accesos_back.Controllers.DepartamentoController.DepartamentoExists(System.Int32)">
+            <summary>
+            Comprueba que el departamento con el id recibido existe.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="T:control_de_accesos_back.Controllers.RegistroController">
+            <summary>Clase RegistroController - para gestionar la gestión de registros.
+            </summary>
+        </member>
+        <member name="F:control_de_accesos_back.Controllers.RegistroController._context">
+            <summary>Instance variable <c>_context</c>Representa el contexto de la BBDD para poder acceder a ella.</summary>
+        </member>
+        <member name="F:control_de_accesos_back.Controllers.RegistroController._repositorio">
+            <summary>Instance variable <c>_repositorio</c>Representa el repositorio de métodos de los registros.</summary>
+        </member>
+        <member name="M:control_de_accesos_back.Controllers.RegistroController.#ctor(control_de_accesos_back.MyContext,control_de_accesos_back.Data.IRegistroRepositorio)">
+            <summary>
+            Constructor de la clase RegistroController.
+            </summary>
+        </member>
+        <member name="M:control_de_accesos_back.Controllers.RegistroController.GetRegistro">
+            <summary>
+            Se encarga de Obtener una lista con todos los registros del día actual con el formato necesario.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:control_de_accesos_back.Controllers.RegistroController.GetRegistroMes(System.Int32)">
+            <summary>
+            Obtiene una lista con todos los registros que coincidan con el mes pasado por parámetro
+            </summary>
+            <param name="mes"></param>
+            <returns></returns>
+        </member>
+        <member name="M:control_de_accesos_back.Controllers.RegistroController.GetRegistro(System.Int32)">
+            <summary>
+            Obtiene el registro que coincide con el id recibido.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:control_de_accesos_back.Controllers.RegistroController.GetUltimoRegistro(System.Int32)">
+            <summary>
+            Obtiene el último registro del usuario cuyo id coincide con el id recibido.
+            Esto es para mandarle al front el último registro y así saber si el próximo marcaje
+            a realizar tiene que ser entrada o salida, se tiene en cuenta que no tenga ningún marcaje porque sea el primero
+            y en ese caso se establece como si fuera de salida para que así el primer registro sea de entrada obligatoriamente.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:control_de_accesos_back.Controllers.RegistroController.PutRegistro(System.Int32,control_de_accesos_back.Modelos.Registro)">
+            <summary>
+            Modifico el registro que coincide con el id recibido.
+            </summary>
+            <param name="id"></param>
+            <param name="registro"></param>
+            <returns></returns>
+        </member>
+        <member name="M:control_de_accesos_back.Controllers.RegistroController.MarcarRegistro(control_de_accesos_back.Dtos.RegistroDto)">
+            <summary>
+            Inserto el registro que puede ser tanto un marcaje de entrada como uno de salida.
+            Los marcajes de entrada tienen el valor de 'true' y en la base de datos valor '1'.
+            Los marcajes de salida tienen el valor de 'false' y en la base de datos valor '0'.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:control_de_accesos_back.Controllers.RegistroController.DeleteRegistro(System.Int32)">
+            <summary>
+            Elimino el registro que coincide con el id recibido.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="T:control_de_accesos_back.Controllers.UsuarioController">
+            <summary>Clase UsuarioController - para gestionar la gestión de usuarios.
+            </summary>
+        </member>
+        <member name="F:control_de_accesos_back.Controllers.UsuarioController._context">
+            <summary>Instance variable <c>_context</c>Representa el contexto de la BBDD para poder acceder a ella.</summary>
+        </member>
+        <member name="F:control_de_accesos_back.Controllers.UsuarioController._repositorio">
+            <summary>Instance variable <c>_repositorio</c>Representa el repositorio de métodos de los usuarios.</summary>
+        </member>
+        <member name="M:control_de_accesos_back.Controllers.UsuarioController.#ctor(control_de_accesos_back.MyContext,control_de_accesos_back.Data.IUsuarioRepositorio)">
+            <summary>
+            Constructor de la clase UsuarioController.
+            </summary>
+        </member>
+        <member name="M:control_de_accesos_back.Controllers.UsuarioController.GetUsuario">
+            <summary>
+            Obtiene una lista con todos los usuarios
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:control_de_accesos_back.Controllers.UsuarioController.GetUsuario(System.Int32)">
+            <summary>
+            Obtiene el usuario que coincide con el id recibido.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:control_de_accesos_back.Controllers.UsuarioController.PutUsuario(System.Int32,control_de_accesos_back.Modelos.Usuario)">
+            <summary>
+            Edita el usuario que coincide con el id recibido.
+            </summary>
+            <param name="id"></param>
+            <param name="usuario"></param>
+            <returns></returns>
+        </member>
+        <member name="M:control_de_accesos_back.Controllers.UsuarioController.PutUsuarioNewPassword(System.Int32,System.String,System.String,control_de_accesos_back.Modelos.Usuario)">
+            <summary>
+            Modifica la contraseña del usuario con el id recibido poniéndole la nueva contraseña recibida en el parámetro 'newPassword'
+            siempre que coincida la contraseña inicial con la recibida en el parámetro 'password'.
+            </summary>
+            <param name="id_usuario"></param>
+            <param name="password"></param>
+            <param name="newPassword"></param>
+            <param name="usuario"></param>
+            <returns></returns>
+        </member>
+        <member name="M:control_de_accesos_back.Controllers.UsuarioController.PutUsuarioResetPassword(System.Int32,control_de_accesos_back.Modelos.Usuario)">
+            <summary>
+            Resetea la contraseña del usuario que tenga como id el recibido por parámetro.
+            </summary>
+            <param name="id_usuario"></param>
+            /// <param name="usuario"></param>
+            <returns></returns>
+        </member>
+        <member name="M:control_de_accesos_back.Controllers.UsuarioController.Register(control_de_accesos_back.Dtos.UsuarioDto)">
+            <summary>
+            Inserta un nuevo empleado.
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:control_de_accesos_back.Controllers.UsuarioController.DeleteUsuario(System.Int32)">
+            <summary>
+            Elimina el empleado cuyo id coincide con el id recibido por parámetro.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:control_de_accesos_back.Controllers.UsuarioController.UsuarioExists(System.Int32)">
+            <summary>
+            Comprueba que el id recibido por parámetro coincide con el de un usuario para saber si existe.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="T:control_de_accesos_back.Data.IRegistroRepositorio">
+            <summary>Interfaz IRegistroRepositorio - para manejar los métodos de los registros.
+            </summary>
+        </member>
+        <member name="M:control_de_accesos_back.Data.IRegistroRepositorio.Create(control_de_accesos_back.Modelos.Registro)">
+            <summary>Definición del método 'Create' para crear nuevos registros.
+            </summary>
+            <param name="registro"></param>
+        </member>
+        <member name="T:control_de_accesos_back.Data.IUsuarioRepositorio">
+            <summary>Interfaz IUsuarioRepositorio - para manejar los métodos de los usuarios.
+            </summary>
+        </member>
+        <member name="M:control_de_accesos_back.Data.IUsuarioRepositorio.Create(control_de_accesos_back.Modelos.Usuario)">
+            <summary>Definición del método 'Create' para crear nuevos usuarios.
+            </summary>
+            <param name="usuario"></param>
+        </member>
+        <member name="M:control_de_accesos_back.Data.IUsuarioRepositorio.GetByNombreUsuario(System.String)">
+            <summary>Definición del método 'GetByNombreUsuario' para obtener un usuario por su nombre de usuario.
+            </summary>
+            <param name="nombre_usuario"></param>
+        </member>
+        <member name="M:control_de_accesos_back.Data.IUsuarioRepositorio.GetAllByNombreUsuario(System.String)">
+            <summary>Definición del método 'GetAllByNombreUsuario' para obtener el número de usuarios que tienen el nombre de usuario pasado por parámetro.
+            </summary>
+            <param name="nombre_usuario"></param>
+        </member>
+        <member name="M:control_de_accesos_back.Data.IUsuarioRepositorio.GetById(System.Int32)">
+            <summary>Definición del método 'GetById' para obtener el usuario cuyo id coincide con el pasado por parámetro.
+            </summary>
+            <param name="id"></param>
+        </member>
+        <member name="T:control_de_accesos_back.Data.RegistroRepositorio">
+            <summary>Clase RegistroRepositorio - para implementar los métodos de los registros definidos en la interfaz IRegistroRepositorio.
+            </summary>
+        </member>
+        <member name="F:control_de_accesos_back.Data.RegistroRepositorio._context">
+            <summary>Instance variable <c>_context</c>Representa el contexto de la BBDD para poder acceder a ella.</summary>
+        </member>
+        <member name="M:control_de_accesos_back.Data.RegistroRepositorio.#ctor(control_de_accesos_back.MyContext)">
+            <summary>
+            Constructor de la clase RegistroRepositorio.
+            </summary>
+        </member>
+        <member name="M:control_de_accesos_back.Data.RegistroRepositorio.Create(control_de_accesos_back.Modelos.Registro)">
+            <summary>Implementación del método 'Create' para crear nuevos registros.
+            </summary>
+            <param name="registro"></param>
+            <return></return>
+        </member>
+        <member name="T:control_de_accesos_back.Data.UsuarioRepositorio">
+            <summary>Clase UsuarioRepositorio - para implementar los métodos de los registros definidos en la interfaz IUsuarioRepositorio.
+            </summary>
+        </member>
+        <member name="F:control_de_accesos_back.Data.UsuarioRepositorio._context">
+            <summary>Instance variable <c>_context</c>Representa el contexto de la BBDD para poder acceder a ella.</summary>
+        </member>
+        <member name="M:control_de_accesos_back.Data.UsuarioRepositorio.#ctor(control_de_accesos_back.MyContext)">
+            <summary>
+            Constructor de la clase UsuarioRepositorio.
+            </summary>
+        </member>
+        <member name="M:control_de_accesos_back.Data.UsuarioRepositorio.Create(control_de_accesos_back.Modelos.Usuario)">
+            <summary>Implementación del método 'Create' para crear nuevos usuarios.
+            </summary>
+            <param name="usuario"></param>
+        </member>
+        <member name="M:control_de_accesos_back.Data.UsuarioRepositorio.GetByNombreUsuario(System.String)">
+            <summary>Implementación del método 'GetByNombreUsuario' para obtener un usuario por su nombre de usuario.
+            </summary>
+            <param name="nombre_usuario"></param>
+        </member>
+        <member name="M:control_de_accesos_back.Data.UsuarioRepositorio.GetAllByNombreUsuario(System.String)">
+            <summary>Implementación del método 'GetAllByNombreUsuario' para obtener el número de usuarios que tienen el nombre de usuario pasado por parámetro.
+            </summary>
+            <param name="nombre_usuario"></param>
+        </member>
+        <member name="M:control_de_accesos_back.Data.UsuarioRepositorio.GetById(System.Int32)">
+            <summary>Implementación del método 'GetById' para obtener el usuario cuyo id coincide con el pasado por parámetro.
+            </summary>
+            <param name="id"></param>
+        </member>
+        <member name="T:control_de_accesos_back.MyContext">
+            <summary>Clase MyContext - para gestionar las relaciones de la base de datos.
+            </summary>
+        </member>
+        <member name="M:control_de_accesos_back.MyContext.#ctor(Microsoft.EntityFrameworkCore.DbContextOptions)">
+            <summary>
+            Constructor de la clase MyContext.
+            </summary>
+        </member>
+        <member name="M:control_de_accesos_back.MyContext.OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <summary>
+            Método OnModelCreating para establecer toda la configuración de las tablas de la BBDD
+            </summary>
+        </member>
+        <member name="P:control_de_accesos_back.MyContext.Usuario">
+            <value>Property <c>Usuario</c>Representa la tabla Usuario en la BBDD.</value>
+        </member>
+        <member name="P:control_de_accesos_back.MyContext.Registro">
+            <value>Property <c>Registro</c>Representa la tabla Registro en la BBDD.</value>
+        </member>
+        <member name="P:control_de_accesos_back.MyContext.Departamento">
+            <value>Property <c>Departamento</c>Representa la tabla Departamento en la BBDD.</value>
+        </member>
+        <member name="T:control_de_accesos_back.Dtos.DepartamentoDto">
+            <summary>Clase DepartamentoDto - es el dto de los departamentos
+            </summary>
+        </member>
+        <member name="P:control_de_accesos_back.Dtos.DepartamentoDto.Id_departamento">
+            <value>Property <c>Id_departamento</c>Representa el id del departamento.</value>
+        </member>
+        <member name="P:control_de_accesos_back.Dtos.DepartamentoDto.Nombre">
+            <value>Property <c>Nombre</c>Representa el nombre del departamento.</value>
+        </member>
+        <member name="T:control_de_accesos_back.Dtos.LoginDto">
+            <summary>Clase LoginDto - es el dto del login y logout
+            </summary>
+        </member>
+        <member name="P:control_de_accesos_back.Dtos.LoginDto.Nombre_usuario">
+            <value>Property <c>Nombre_usuario</c>Representa el nombre de usuario del usuario.</value>
+        </member>
+        <member name="P:control_de_accesos_back.Dtos.LoginDto.Password">
+            <value>Property <c>Password</c>Representa la contraseña del usuario.</value>
+        </member>
+        <member name="T:control_de_accesos_back.Dtos.RegistroDto">
+            <summary>Clase RegistroDto - es el dto de los registros
+            </summary>
+        </member>
+        <member name="P:control_de_accesos_back.Dtos.RegistroDto.Id_registro">
+            <value>Property <c>Id_registro</c>Representa el id del registro.</value>
+        </member>
+        <member name="P:control_de_accesos_back.Dtos.RegistroDto.Fecha">
+            <value>Property <c>Fecha</c>Representa la fecha a la que se ha realizado el registro.</value>
+        </member>
+        <member name="P:control_de_accesos_back.Dtos.RegistroDto.Hora">
+            <value>Property <c>Hora</c>Representa la hora a la que se ha realizado el registro.</value>
+        </member>
+        <member name="P:control_de_accesos_back.Dtos.RegistroDto.Tipo">
+            <value>Property <c>Tipo</c>Representa el tipo de registro, es de tipo bool, el valor 1 corresponde
+            a registro de entrada y el valor 0 a registro de salida.</value>
+        </member>
+        <member name="P:control_de_accesos_back.Dtos.RegistroDto.Id_usuario">
+            <value>Property <c>Id_usuario</c>Representa el id del usuario al que pertenece dicho registro.</value>
+        </member>
+        <member name="P:control_de_accesos_back.Dtos.RegistroDto.Usuario">
+            <value>Property <c>Usuario</c>Representa el usuario al que pertenece dicho registro.</value>
+        </member>
+        <member name="T:control_de_accesos_back.Dtos.UsuarioDto">
+            <summary>Clase UsuarioDto - es el dto de los usuarios
+            </summary>
+        </member>
+        <member name="P:control_de_accesos_back.Dtos.UsuarioDto.Nombre">
+            <value>Property <c>Nombre</c>Representa el nombre del usuario.</value>
+        </member>
+        <member name="P:control_de_accesos_back.Dtos.UsuarioDto.Apellidos">
+            <value>Property <c>Apellidos</c>Representa los apellidos del usuario.</value>
+        </member>
+        <member name="P:control_de_accesos_back.Dtos.UsuarioDto.Nombre_usuario">
+            <value>Property <c>Nombre_usuario</c>Representa el nombre de usuario del usuario.</value>
+        </member>
+        <member name="P:control_de_accesos_back.Dtos.UsuarioDto.Telefono">
+            <value>Property <c>Telefono</c>Representa el teléfono del usuario.</value>
+        </member>
+        <member name="P:control_de_accesos_back.Dtos.UsuarioDto.Id_departamento">
+            <value>Property <c>Id_departamento</c>Representa el id del departamento al que pertenece el usuario.</value>
+        </member>
+        <member name="P:control_de_accesos_back.Dtos.UsuarioDto.Departamento">
+            <value>Property <c>Departamento</c>Representa departamento al que pertenece el usuario.</value>
+        </member>
+        <member name="P:control_de_accesos_back.Dtos.UsuarioDto.Tipo_usuario">
+            <value>Property <c>Tipo_usuario</c>Representa el tipo de usuario al que pertenece el empleado, puede ser
+            o Admin o Empleado.</value>
+        </member>
+        <member name="P:control_de_accesos_back.Dtos.UsuarioDto.Password">
+            <value>Property <c>Password</c>Representa la contraseña del usuario.</value>
+        </member>
+        <member name="P:control_de_accesos_back.Dtos.UsuarioDto.Activo">
+            <value>Property <c>Activo</c>Representa si el usuario está activo o no, true en el caso de que
+            esté activo y false en el caso de que esté inactivo.</value>
+        </member>
+        <member name="T:control_de_accesos_back.Helpers.JwtService">
+            <summary>Clase JwtService - para gestionar las cookies.
+            </summary>
+        </member>
+        <member name="F:control_de_accesos_back.Helpers.JwtService.secureKey">
+            <summary>Instance variable <c>secureKey</c>Representa un string del cual se genera la cookie.</summary>
+        </member>
+        <member name="M:control_de_accesos_back.Helpers.JwtService.Generate(System.Int32)">
+            <summary>
+            Método Generate para generar las cookies usando Sha256
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:control_de_accesos_back.Helpers.JwtService.Verify(System.String)">
+            <summary>
+            Método Verify para verificar la cookie recibida
+            </summary>
+            <param name="jwt"></param>
+            <returns></returns>
+        </member>
+        <member name="T:control_de_accesos_back.Modelos.Departamento">
+            <summary>Clase Departamento - es el modelo de los departamentos
+            </summary>
+        </member>
+        <member name="P:control_de_accesos_back.Modelos.Departamento.Id_departamento">
+            <value>Property <c>Id_departamento</c>Representa el id del departamento.</value>
+        </member>
+        <member name="P:control_de_accesos_back.Modelos.Departamento.Nombre">
+            <value>Property <c>Nombre</c>Representa el nombre del departamento.</value>
+        </member>
+        <member name="T:control_de_accesos_back.Modelos.Registro">
+            <summary>Clase Registro - es el modelo de los registros
+            </summary>
+        </member>
+        <member name="P:control_de_accesos_back.Modelos.Registro.Id_registro">
+            <value>Property <c>Id_registro</c>Representa el id del registro.</value>
+        </member>
+        <member name="P:control_de_accesos_back.Modelos.Registro.Fecha">
+            <value>Property <c>Fecha</c>Representa la fecha a la que se ha realizado el registro.</value>
+        </member>
+        <member name="P:control_de_accesos_back.Modelos.Registro.Hora">
+            <value>Property <c>Hora</c>Representa la hora a la que se ha realizado el registro.</value>
+        </member>
+        <member name="P:control_de_accesos_back.Modelos.Registro.Tipo">
+            <value>Property <c>Tipo</c>Representa el tipo de registro, es de tipo bool, el valor 1 corresponde
+            a registro de entrada y el valor 0 a registro de salida.</value>
+        </member>
+        <member name="P:control_de_accesos_back.Modelos.Registro.Id_usuario">
+            <value>Property <c>Id_usuario</c>Representa el id del usuario al que pertenece dicho registro.</value>
+        </member>
+        <member name="P:control_de_accesos_back.Modelos.Registro.Usuario">
+            <value>Property <c>Usuario</c>Representa el usuario al que pertenece dicho registro.</value>
+        </member>
+        <member name="T:control_de_accesos_back.Modelos.Usuario">
+            <summary>Clase Usuario - es el modelo de los usuarios
+            </summary>
+        </member>
+        <member name="P:control_de_accesos_back.Modelos.Usuario.Id_usuario">
+            <value>Property <c>Id_usuario</c>Representa el id del usuario.</value>
+        </member>
+        <member name="P:control_de_accesos_back.Modelos.Usuario.Nombre">
+            <value>Property <c>Nombre</c>Representa el nombre del usuario.</value>
+        </member>
+        <member name="P:control_de_accesos_back.Modelos.Usuario.Apellidos">
+            <value>Property <c>Apellidos</c>Representa los apellidos del usuario.</value>
+        </member>
+        <member name="P:control_de_accesos_back.Modelos.Usuario.Nombre_usuario">
+            <value>Property <c>Nombre_usuario</c>Representa el nombre de usuario del usuario.</value>
+        </member>
+        <member name="P:control_de_accesos_back.Modelos.Usuario.Telefono">
+            <value>Property <c>Telefono</c>Representa el teléfono del usuario.</value>
+        </member>
+        <member name="P:control_de_accesos_back.Modelos.Usuario.Id_departamento">
+            <value>Property <c>Id_departamento</c>Representa el id del departamento al que pertenece el usuario.</value>
+        </member>
+        <member name="P:control_de_accesos_back.Modelos.Usuario.Departamento">
+            <value>Property <c>Departamento</c>Representa departamento al que pertenece el usuario.</value>
+        </member>
+        <member name="P:control_de_accesos_back.Modelos.Usuario.Activo">
+            <value>Property <c>Activo</c>Representa si el usuario está activo o no, true en el caso de que
+            esté activo y false en el caso de que esté inactivo.</value>
+        </member>
+        <member name="P:control_de_accesos_back.Modelos.Usuario.Tipo_usuario">
+            <value>Property <c>Tipo_usuario</c>Representa el tipo de usuario al que pertenece el empleado, puede ser
+            o Admin o Empleado.</value>
+        </member>
+        <member name="P:control_de_accesos_back.Modelos.Usuario.Password">
+            <value>Property <c>Password</c>Representa la contraseña del usuario.</value>
+        </member>
+        <member name="T:control_de_accesos_back.Program">
+            <summary>Clase Program - Contiene el main de la aplicación (servidor).
+            </summary>
+        </member>
+        <member name="M:control_de_accesos_back.Program.Main(System.String[])">
+            <summary>
+            Método Main - el primero en ejecutarse
+            </summary>
+            <param name="args"></param>
+        </member>
+        <member name="M:control_de_accesos_back.Program.CreateHostBuilder(System.String[])">
+            <summary>
+            Método CreateHostBuilder - método que lanza el startup para continuar con toda la configuración
+            </summary>
+            <param name="args"></param>
+        </member>
+        <member name="T:control_de_accesos_back.Startup">
+            <summary>Clase Startup - encargada de la configuración inicial al arrancar el servidor.
+            </summary>
+        </member>
+        <member name="M:control_de_accesos_back.Startup.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Constructor de la clase Startup.
+            <param name="configuration"></param>
+            </summary>
+        </member>
+        <member name="P:control_de_accesos_back.Startup.Configuration">
+            <summary>Instance variable <c>Configuration</c>Representa la configuración del programa.</summary>
+        </member>
+        <member name="M:control_de_accesos_back.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Método ConfigureServices para añadir los servicios al contenedor.
+            </summary>
+            <param name="services"></param>
+        </member>
+        <member name="M:control_de_accesos_back.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
+            <summary>
+            Método Configure configurar las canalización de solicitudes HTTP
+            </summary>
+            <param name="app"></param>
+            <param name="env"></param>
+        </member>
+        <member name="T:control_de_accesos_back.Utils">
+            <summary>Clase Utils - donde establezco varios métodos que me son útiles y los puedo reutilizar
+            </summary>
+        </member>
+        <member name="M:control_de_accesos_back.Utils.GenerarNombreUsuario(System.String,System.String)">
+            <summary>
+            Método GenerarNombreUsuario para generar el nombre de usuario, para ello se basa en el nombre y apellidos.
+            Usa la primera letra del nombre y si es compuesto la primera letra del primer y segundo nombre, como segunda
+            parte usa el primer apellido para completar el nombre del usuario.
+            En el caso de que el nombre de usuario se repita, automáticamente se modifica el nombre de usuario añadiéndole un número,
+            este número se va incrementando de uno en uno dependiendo de cuantas veces coincida el nombre de usuario con otro igual.
+            </summary>
+            /// <param name="nombre"></param>
+            /// <param name="apellidos"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
